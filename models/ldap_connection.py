@@ -95,5 +95,5 @@ class LDAPConnection:
         """
         Returns the command name and distinguished name
         """
-        dn_str =  % (self.ldap_username,self.ldap_dn)
+        dn_str = "cn=%s,%s" % (self.ldap_username,self.ldap_dn)
         return ldap.dn.str2dn(dn_str)
