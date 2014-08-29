@@ -73,7 +73,7 @@ class LDAPConnection:
         """
         # connect to server
         try:
-            self.ldap_connection.simple_bind_s(self.compute_dn_with_cn(), self.ldap_password)
+            self.ldap_connection.simple_bind_s(ldap.dn.dn2str(self.compute_dn_with_cn()), self.ldap_password)
         except ldap.INVALID_CREDENTIALS:
             print "[x] Error: Cannot connect to the LDAP server with given credentials. Check the 'username', " \
                   "'password' and 'dn' options in the config file in the '[active_directory]' section.\nExiting."
@@ -95,4 +95,5 @@ class LDAPConnection:
         """
         Returns the command name and distinguished name
         """
-        return "cn=" + self.ldap_username + "," + self.ldap_dn
+        dn_str =  % (self.ldap_username,self.ldap_dn)
+        return ldap.dn.str2dn(dn_str)
